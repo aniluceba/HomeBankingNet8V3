@@ -1,4 +1,5 @@
 using HomeBankingNet8V3.Models;
+using HomeBankingNet8V3.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<HomeBankingContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("HbAppDbConnection")));
 
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
 var app = builder.Build();
 
 // Create a scope to get the DbContext instance
@@ -22,8 +25,8 @@ using (var scope = app.Services.CreateScope())
     DbInitializer.Initialize(context);
 }
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
     }
