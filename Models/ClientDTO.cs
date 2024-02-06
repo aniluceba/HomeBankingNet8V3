@@ -1,7 +1,16 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Models;
+
+using System.Collections.Generic;
+
+using System.Text.Json.Serialization;
+
+
+namespace HomeBankingNet8V3.dtos
 {
     public class ClientDTO
+
     {
+        [JsonIgnore]
         public long Id { get; set; }
 
         public string FirstName { get; set; }

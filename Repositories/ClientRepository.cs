@@ -1,5 +1,7 @@
 ﻿using HomeBankingNet8V3.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HomeBankingNet8V3.Repositories
 {

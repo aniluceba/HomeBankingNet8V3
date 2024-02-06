@@ -1,4 +1,8 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Models;
+
+using System;
+
+namespace HomeBankingNet8V3.Models
 {
     public class AccountDTO
     {

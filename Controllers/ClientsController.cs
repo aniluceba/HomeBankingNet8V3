@@ -1,7 +1,11 @@
-﻿using HomeBankingNet8V3.Models;
+﻿using HomeBankingNet8V3.dtos;
+using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HomeBankingNet8V3.Controllers
 {
@@ -14,8 +18,8 @@ namespace HomeBankingNet8V3.Controllers
         {
             _clientRepository = clientRepository; 
         }
+        
         [HttpGet]
-
         public IActionResult Get()
 
         {
