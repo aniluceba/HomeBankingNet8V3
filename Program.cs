@@ -47,3 +47,6 @@ app.MapRazorPages();
 
 app.Run();
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+

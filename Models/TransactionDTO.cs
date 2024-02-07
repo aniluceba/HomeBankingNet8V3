@@ -1,6 +1,6 @@
 ﻿namespace HomeBankingNet8V3.Models
 {
-    public class Transaction
+    public class TransactionDTO
     {
         public long Id { get; set; }
 
@@ -14,8 +14,6 @@
 
         public long ClientId { get; set; }
 
-        public long AccountId { get; set; }
-
-        public ICollection<Account> Accounts { get; set; }
+        public ICollection<TransactionDTO> Transactions { get; set; }
     }
 }

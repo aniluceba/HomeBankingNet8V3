@@ -13,5 +13,7 @@ namespace HomeBankingNet8V3.Models
         public DateTime CreationDate { get; set; }
 
         public double Balance { get; set; }
+
+        public ICollection<AccountDTO> Accounts { get; set; }
     }
 }
