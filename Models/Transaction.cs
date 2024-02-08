@@ -12,10 +12,9 @@
 
         public DateTime Date { get; set; }
 
-        public long ClientId { get; set; }
 
         public long AccountId { get; set; }
 
-        public ICollection<Account> Accounts { get; set; }
+
     }
 }

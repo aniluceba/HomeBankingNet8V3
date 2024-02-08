@@ -14,6 +14,8 @@
 
         public long ClientId { get; set; }
 
-        public ICollection<TransactionDTO> Transactions { get; set; }
+        public long AccountId { get; set; }
+
+
     }
 }
