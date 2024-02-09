@@ -64,6 +64,14 @@ namespace HomeBankingNet8V3.Controllers
 
                             Number = ac.Number
 
+                        }).ToList(),
+                        Loans = client.ClientLoans.Select(cl => new ClientLoanDTO
+                        {
+                            Id = cl.Id,
+                            LoanId = cl.LoanId,
+                            Name = cl.Loan.Name,
+                            Amount = cl.Amount,
+                            Payments = int.Parse(cl.Payments)
                         }).ToList()
 
                     };
