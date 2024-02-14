@@ -130,6 +130,46 @@
 
                 }
 
+                if (!context.Cards.Any())
+                {
+                    //buscamos al unico cliente
+                    if (context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com") != null)
+                    {
+                        //le agregamos 2 tarjetas de crédito una GOLD y una TITANIUM, de tipo DEBITO Y CREDITO RESPECTIVAMENTE
+                        var cards = new Card[]
+                        {
+                        new Card {
+                            ClientId= context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").Id,
+                            CardHolder = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").FirstName + " " + context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").LastName,
+                            Type = CardType.DEBIT.ToString(),
+                            Color = CardColor.GOLD.ToString(),
+                            Number = "3325-6745-7876-4445",
+                            Cvv = 990,
+                            FromDate= DateTime.Now,
+                            ThruDate= DateTime.Now.AddYears(4),
+                        },
+                        new Card {
+                            ClientId= context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").Id,
+                            CardHolder = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").FirstName + " " + context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").LastName,
+                            Type = CardType.CREDIT.ToString(),
+                            Color = CardColor.TITANIUM.ToString(),
+                            Number = "2234-6745-552-7888",
+                            Cvv = 750,
+                            FromDate= DateTime.Now,
+                            ThruDate= DateTime.Now.AddYears(5),
+                        },
+                        };
+
+                        foreach (Card card in cards)
+                        {
+                            context.Cards.Add(card);
+                        }
+                        context.SaveChanges();
+                    }
+                }
+
+
+
             }
 
         }
