@@ -17,7 +17,7 @@ namespace HomeBankingNet8V3.Repositories
                 .Include(client => client.Accounts)
                 .Include(client => client.ClientLoans)
                 .Include(client => client.Cards)
-                    .ThenInclude(cl => cl.Loan)
+                    .ThenInclude(cl => cl.Loans)
                 .FirstOrDefault();
         }
         public IEnumerable<Client> GetAllClients()
@@ -26,7 +26,7 @@ namespace HomeBankingNet8V3.Repositories
                 .Include(client => client.Accounts)
                 .Include(client => client.ClientLoans)
                 .Include(client => client.Cards)
-                    .ThenInclude(cl => cl.Loan)
+                    .ThenInclude(cl => cl.Loans)
                 .ToList();
         }
         public void Save(Client client)

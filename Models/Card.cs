@@ -1,4 +1,6 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HomeBankingNet8V3.Models
 {
     public class Card
     {
@@ -20,5 +22,6 @@
 
         public long ClientId { get; set; }
 
+        [NotMapped] public object Loans { get; set; }
     }
 }
