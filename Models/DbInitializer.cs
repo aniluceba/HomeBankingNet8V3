@@ -1,4 +1,7 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using System;
+using System.Linq;
+
+namespace HomeBankingNet8V3.Models
 {
     public class DbInitializer
     {

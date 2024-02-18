@@ -22,6 +22,6 @@ namespace HomeBankingNet8V3.Models
 
         public long ClientId { get; set; }
 
-        [NotMapped] public object Loans { get; set; }
+        public ICollection<Loan> Loans { get; set; }
     }
 }
