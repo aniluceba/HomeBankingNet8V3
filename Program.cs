@@ -12,7 +12,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-     
+
 
 //autenticación
 
