@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace HomeBankingNet8V3.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/clients")]
     [ApiController]
     public class ClientsController : ControllerBase
     {
@@ -29,16 +29,15 @@ namespace HomeBankingNet8V3.Controllers
             {
 
                 var clients = _clientRepository.GetAllClients();
-
-
-
-                var clientsDTO = new List<ClientDTO>();
+                 var clientsDTO = new List<ClientDTO>();
 
 
 
                 foreach (Client client in clients)
 
                 {
+                    var cardDTOs = new List<CardDTO>();
+                
 
                     var newClientDTO = new ClientDTO
 
@@ -134,7 +133,7 @@ namespace HomeBankingNet8V3.Controllers
                 }
 
 
-
+                var cardDTOs = new List<CardDTO>();
                 var clientDTO = new ClientDTO
 
                 {
