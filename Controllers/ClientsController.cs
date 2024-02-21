@@ -8,88 +8,67 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace HomeBankingNet8V3.Controllers
+
 {
     [Route("api/[controller]")]
+
     [ApiController]
+
     public class ClientsController : ControllerBase
     {
         private IClientRepository _clientRepository;
+
         public ClientsController(IClientRepository clientRepository)
         {
             _clientRepository = clientRepository;
         }
 
         [HttpGet]
+
         public IActionResult Get()
-
         {
-
             try
-
             {
-
                 var clients = _clientRepository.GetAllClients();
-
-
-
                 var clientsDTO = new List<ClientDTO>();
 
-
-
                 foreach (Client client in clients)
-
                 {
-
                     var newClientDTO = new ClientDTO
-
                     {
-
                         Id = client.Id,
-
                         Email = client.Email,
-
                         FirstName = client.FirstName,
-
                         LastName = client.LastName,
-
                         Accounts = client.Accounts.Select(ac => new AccountDTO
-
                         {
-
                             Id = ac.Id,
-
+                            Number = ac.Number,
                             Balance = ac.Balance,
-
                             CreationDate = ac.CreationDate,
-
-                            Number = ac.Number
-
+                        }).ToList(),
+                        Loans = client.ClientLoans.Select(cl => new ClientLoanDTO
+                        {
+                            Id = cl.Id,
+                            LoanId = cl.LoanId,
+                            Name = cl.Loan.Name,
+                            Amount = cl.Amount,
+                            Payments = cl.Payments,
                         }).ToList()
-
                     };
-
-
 
                     clientsDTO.Add(newClientDTO);
 
                 }
-
-
-
-
 
                 return Ok(clientsDTO);
 
             }
 
             catch (Exception ex)
-
             {
-
                 return StatusCode(500, ex.Message);
-
             }
-
         }
 
         [HttpPost]
@@ -100,7 +79,7 @@ namespace HomeBankingNet8V3.Controllers
             {
                 if (newClient.FirstName.IsNullOrEmpty() || newClient.LastName.IsNullOrEmpty() || newClient.Email.IsNullOrEmpty())
                 {
-                    return BadRequest("Datos ingresados incorrectos. Pruebe nuevamente.");
+                    return BadRequest("Alguno de los datos ingresados es erróneo, intentelo nuevamente.");
                 }
 
                 var newclient = new Client
@@ -122,75 +101,49 @@ namespace HomeBankingNet8V3.Controllers
 
         }
 
-
-
-
         [HttpGet("{id}")]
 
         public IActionResult Get(long id)
-
         {
-
             try
-
             {
-
                 var client = _clientRepository.FindById(id);
-
                 if (client == null)
-
                 {
-
                     return Forbid();
-
                 }
-
-
-
                 var clientDTO = new ClientDTO
 
                 {
-
                     Id = client.Id,
-
                     Email = client.Email,
-
                     FirstName = client.FirstName,
-
                     LastName = client.LastName,
-
                     Accounts = client.Accounts.Select(ac => new AccountDTO
-
                     {
-
                         Id = ac.Id,
-
+                        Number = ac.Number,
                         Balance = ac.Balance,
-
                         CreationDate = ac.CreationDate,
-
-                        Number = ac.Number
-
+                    }).ToList(),
+                    Loans = client.ClientLoans.Select(cl => new ClientLoanDTO
+                    {
+                        Id = cl.Id,
+                        LoanId = cl.LoanId,
+                        Name = cl.Loan.Name,
+                        Amount = cl.Amount,
+                        Payments = cl.Payments,
                     }).ToList()
-
                 };
-
-
 
                 return Ok(clientDTO);
 
             }
 
             catch (Exception ex)
-
             {
-
                 return StatusCode(500, ex.Message);
-
             }
-
         }
-
     }
-
 }
