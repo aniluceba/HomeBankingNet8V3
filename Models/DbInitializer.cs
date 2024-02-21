@@ -1,4 +1,9 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Models;
+using Microsoft.EntityFrameworkCore;
+using System;
+
+
+namespace HomeBankingNet8V3.Models
 {
     public class DbInitializer
     {
@@ -20,7 +25,11 @@
                 {
                     var accounts = new Account[]
                     {
-                        new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = string.Empty, Balance = 0 }
+                        new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = "VIN001", Balance = 0 },
+                        new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = "VIN002", Balance = 0 },
+                        new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = "VIN003", Balance = 0 },
+
+
                     };
         
                     context.AddRange(accounts);
@@ -65,7 +74,16 @@
                 }
 
             }
-
+            ModifyAccBalance(context);
+        }
+        public static void ModifyAccBalance(HomeBankingContext context)
+        {
+            foreach (Transaction transactions in context.Transaction.ToList())
+            {
+                var account = context.Account.FirstOrDefault(c => c.Id == transactions.AccountId);
+                account.SetBalance(transactions.Amount);
+            }
+            context.SaveChanges();
         }
 
 

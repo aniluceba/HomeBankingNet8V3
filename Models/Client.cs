@@ -1,4 +1,6 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using System.Collections.Generic;
+
+namespace HomeBankingNet8V3.Models
 {
     public class Client
     {

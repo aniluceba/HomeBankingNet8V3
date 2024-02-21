@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HomeBankingNet8V3.Migrations
 {
     [DbContext(typeof(HomeBankingContext))]
-    [Migration("20240204163138_AddAccountEntity")]
-    partial class AddAccountEntity
+    [Migration("20240221001939_addTransactionEntity")]
+    partial class addTransactionEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace HomeBankingNet8V3.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("HomeBankingNet8V3.Account", b =>
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Account", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,7 +77,37 @@ namespace HomeBankingNet8V3.Migrations
                     b.ToTable("Clients");
                 });
 
-            modelBuilder.Entity("HomeBankingNet8V3.Account", b =>
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Transaction", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AccountId")
+                        .HasColumnType("bigint");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccountId");
+
+                    b.ToTable("Transaction");
+                });
+
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Account", b =>
                 {
                     b.HasOne("HomeBankingNet8V3.Models.Client", "Client")
                         .WithMany("Accounts")
@@ -86,6 +116,20 @@ namespace HomeBankingNet8V3.Migrations
                         .IsRequired();
 
                     b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Transaction", b =>
+                {
+                    b.HasOne("HomeBankingNet8V3.Models.Account", null)
+                        .WithMany("Transactions")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Account", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Client", b =>

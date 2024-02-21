@@ -1,4 +1,6 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Models;
+
+namespace HomeBankingNet8V3.Models.DTO
 {
     public class TransactionDTO
     {
@@ -12,10 +14,6 @@
 
         public DateTime Date { get; set; }
 
-        public long ClientId { get; set; }
-
-        public long AccountId { get; set; }
-
-
     }
 }
+

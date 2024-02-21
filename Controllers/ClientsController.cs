@@ -1,8 +1,9 @@
-﻿using HomeBankingNet8V3.dtos;
+﻿using HomeBankingNet8V3.Models.DTO;
 using HomeBankingNet8V3.Models;
-using HomeBankingNet8V3.Repositories;
+using HomeBankingNet8V3.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -91,6 +92,37 @@ namespace HomeBankingNet8V3.Controllers
             }
 
         }
+
+        [HttpPost]
+
+        public IActionResult Post([FromBody] NewClientDTO newClient)
+        {
+            try
+            {
+                if (newClient.FirstName.IsNullOrEmpty() || newClient.LastName.IsNullOrEmpty() || newClient.Email.IsNullOrEmpty())
+                {
+                    return BadRequest("Datos ingresados incorrectos. Pruebe nuevamente.");
+                }
+
+                var newclient = new Client
+                {
+                    FirstName = newClient.FirstName,
+                    LastName = newClient.LastName,
+                    Email = newClient.Email,
+                };
+
+                _clientRepository.Save(newclient);
+
+                return CreatedAtAction(nameof(Get), new { id = newclient.Id }, newclient);
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
 
 
 

@@ -1,22 +1,30 @@
 using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
+using HomeBankingNet8V3.Controllers;
+using HomeBankingNet8V3.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddRazorPages();
-
-builder.Services.AddControllers().AddJsonOptions(x =>
-x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 // Add DbContext to the container
 
-builder.Services.AddDbContext<HomeBankingContext>(options => 
+builder.Services.AddDbContext<HomeBankingContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HbAppDbConnection")));
 
+// Add Controllers
+
+builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
 
 var app = builder.Build();
 
@@ -35,6 +43,9 @@ if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
     }
+
+app.UseDefaultFiles();
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -47,6 +58,4 @@ app.MapRazorPages();
 
 app.Run();
 
-app.UseDefaultFiles();
-app.UseStaticFiles();
 

@@ -1,8 +1,8 @@
 ﻿using HomeBankingNet8V3.Models;
-
+using System.Collections.Generic;
 using System;
 
-namespace HomeBankingNet8V3.Models
+namespace HomeBankingNet8V3.Models.DTO
 {
     public class AccountDTO
     {
@@ -14,6 +14,6 @@ namespace HomeBankingNet8V3.Models
 
         public double Balance { get; set; }
 
-        public ICollection<AccountDTO> Accounts { get; set; }
+        public ICollection<TransactionDTO> Transaction { get; set; }
     }
 }
