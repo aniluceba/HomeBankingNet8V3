@@ -1,6 +1,5 @@
 ﻿using HomeBankingNet8V3.Models;
-using HomeBankingNet8V3.Models.DTO;
-using HomeBankingNet8V3.Repositories.Interface;
+using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;

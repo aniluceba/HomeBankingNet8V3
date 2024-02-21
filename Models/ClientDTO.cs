@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 
-namespace HomeBankingNet8V3.Models.DTO
+namespace HomeBankingNet8V3.Models
 {
     public class ClientDTO
 

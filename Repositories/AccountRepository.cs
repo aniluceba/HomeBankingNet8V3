@@ -1,6 +1,6 @@
 ﻿using HomeBankingNet8V3.Models;
 using Microsoft.EntityFrameworkCore;
-using HomeBankingNet8V3.Repositories.Interface;
+using HomeBankingNet8V3.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 

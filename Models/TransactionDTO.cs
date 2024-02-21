@@ -1,6 +1,6 @@
 ﻿using HomeBankingNet8V3.Models;
 
-namespace HomeBankingNet8V3.Models.DTO
+namespace HomeBankingNet8V3.Models
 {
     public class TransactionDTO
     {

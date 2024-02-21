@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 using System.Linq;
 using System;
-using HomeBankingNet8V3.Repositories.Interface;
+using HomeBankingNet8V3.Repositories;
 
 namespace HomeBankingNet8V3.Repositories
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 
-namespace HomeBankingNet8V3.Models.DTO
+namespace HomeBankingNet8V3.Models
 {
     public class AccountDTO
     {

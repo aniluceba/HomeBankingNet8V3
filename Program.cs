@@ -1,7 +1,6 @@
 using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
 using HomeBankingNet8V3.Controllers;
-using HomeBankingNet8V3.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
