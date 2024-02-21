@@ -7,7 +7,7 @@ namespace HomeBankingNet8V3.Repositories
 {
     public class ClientRepository : RepositoryBase<Client>, IClientRepository
     {
-        public ClientRepository(HomeBankingContext repositoryContext) : base(repositoryContext) 
+        public ClientRepository(HomeBankingContext repositoryContext) : base(repositoryContext)
         {
 
         }
@@ -16,7 +16,7 @@ namespace HomeBankingNet8V3.Repositories
             return FindByCondition(client => client.Id == id)
                 .Include(client => client.Accounts)
                 .Include(client => client.ClientLoans)
-                    .ThenInclude(cl => cl.Loan)
+                .Include(cl => cl.Loans)
                 .FirstOrDefault();
         }
         public IEnumerable<Client> GetAllClients()
@@ -24,7 +24,7 @@ namespace HomeBankingNet8V3.Repositories
             return FindAll()
                 .Include(client => client.Accounts)
                 .Include(client => client.ClientLoans)
-                    .ThenInclude(cl => cl.Loan)
+                .Include(cl => cl.Loans)
                 .ToList();
         }
         public void Save(Client client)
@@ -33,6 +33,5 @@ namespace HomeBankingNet8V3.Repositories
             SaveChanges();
         }
     }
-    
-}
 
+}

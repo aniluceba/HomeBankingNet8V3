@@ -6,8 +6,6 @@
 
         public string Name { get; set; }
 
-        public string Number { get; set; }
-
         public double MaxAmount { get; set; }
 
         public string Payments { get; set; }

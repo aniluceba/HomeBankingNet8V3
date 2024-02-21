@@ -1,8 +1,8 @@
-﻿using HomeBankingNet8V3.dtos;
-using HomeBankingNet8V3.Models;
+﻿using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +16,9 @@ namespace HomeBankingNet8V3.Controllers
         private IClientRepository _clientRepository;
         public ClientsController(IClientRepository clientRepository)
         {
-            _clientRepository = clientRepository; 
+            _clientRepository = clientRepository;
         }
-        
+
         [HttpGet]
         public IActionResult Get()
 
@@ -64,14 +64,6 @@ namespace HomeBankingNet8V3.Controllers
 
                             Number = ac.Number
 
-                        }).ToList(),
-                        Loans = client.ClientLoans.Select(cl => new ClientLoanDTO
-                        {
-                            Id = cl.Id,
-                            LoanId = cl.LoanId,
-                            Name = cl.Loan.Name,
-                            Amount = cl.Amount,
-                            Payments = int.Parse(cl.Payments)
                         }).ToList()
 
                     };
@@ -99,6 +91,37 @@ namespace HomeBankingNet8V3.Controllers
             }
 
         }
+
+        [HttpPost]
+
+        public IActionResult Post([FromBody] NewClientDTO newClient)
+        {
+            try
+            {
+                if (newClient.FirstName.IsNullOrEmpty() || newClient.LastName.IsNullOrEmpty() || newClient.Email.IsNullOrEmpty())
+                {
+                    return BadRequest("Datos ingresados incorrectos. Pruebe nuevamente.");
+                }
+
+                var newclient = new Client
+                {
+                    FirstName = newClient.FirstName,
+                    LastName = newClient.LastName,
+                    Email = newClient.Email,
+                };
+
+                _clientRepository.Save(newclient);
+
+                return CreatedAtAction(nameof(Get), new { id = newclient.Id }, newclient);
+            }
+
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
 
 
 
@@ -171,4 +194,3 @@ namespace HomeBankingNet8V3.Controllers
     }
 
 }
-  
