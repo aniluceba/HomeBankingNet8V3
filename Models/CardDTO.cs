@@ -1,4 +1,6 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using System;
+
+namespace HomeBankingnNet8V3.Models
 {
     public class CardDTO
     {

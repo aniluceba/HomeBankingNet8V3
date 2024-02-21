@@ -1,24 +1,20 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Models;
+using System.Collections.Generic;
+
+namespace HomeBankingNet8V3.Models
 {
     public class Account
     {
-            public long Id { get; set; }
-
-            public string Number { get; set; }
-
-            public DateTime CreationDate { get; set; }
-
-            public double Balance { get; set; }
-
-            public Client Client { get; set; }
-
-            public long ClientId { get; set; }
-
-            public long AccountId { get; set; }
-
-        public ICollection<Transaction> Transactions { get; set; }
-
+        public long Id { get; set; }
+        public string Number { get; set; }
+        public DateTime CreationDate { get; set; }
+        public double Balance { get; set; }
+        public Client Client { get; set; }
+        public long ClientId { get; set; }
+        public ICollection<Transaction> Transaction { get; set; }
+        public void SetBalance(double TransactionAmount)
+        {
+            Balance += TransactionAmount;
+        }
     }
-
 }
-

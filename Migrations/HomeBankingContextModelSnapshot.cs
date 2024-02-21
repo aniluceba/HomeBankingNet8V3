@@ -30,9 +30,6 @@ namespace HomeBankingNet8V3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
                     b.Property<double>("Balance")
                         .HasColumnType("float");
 
@@ -66,8 +63,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<long>("ClientId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Color")
+                        .HasColumnType("int");
 
                     b.Property<int>("Cvv")
                         .HasColumnType("int");
@@ -81,8 +78,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<DateTime>("ThruDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -159,9 +156,6 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Payments")
                         .HasColumnType("nvarchar(max)");
 
@@ -190,8 +184,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -242,7 +236,7 @@ namespace HomeBankingNet8V3.Migrations
             modelBuilder.Entity("HomeBankingNet8V3.Models.Transaction", b =>
                 {
                     b.HasOne("HomeBankingNet8V3.Models.Account", null)
-                        .WithMany("Transactions")
+                        .WithMany("Transaction")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -250,7 +244,7 @@ namespace HomeBankingNet8V3.Migrations
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Account", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Client", b =>

@@ -1,27 +1,25 @@
-using HomeBankingNet8V3.Models;
-using HomeBankingNet8V3.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
+using HomeBankingNet8V3.Models;
+using HomeBankingNet8V3.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
-// Add DbContext to the container
-
-builder.Services.AddDbContext<HomeBankingContext>(options => 
+// Add DbContext
+builder.Services.AddDbContext<HomeBankingContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HbAppDbConnection")));
 
+// Add Controllers
+builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
 var app = builder.Build();
-
-
-// Create a scope to get the DbContext instance
 
 using (var scope = app.Services.CreateScope())
 {
@@ -32,21 +30,20 @@ using (var scope = app.Services.CreateScope())
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
-    {
-        app.UseExceptionHandler("/Error");
-    }
+{
+    app.UseExceptionHandler("/Error");
+}
+
 app.UseStaticFiles();
+
+app.UseDefaultFiles();
 
 app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 app.MapRazorPages();
 
+app.MapControllers();
+
 app.Run();
-
-app.UseDefaultFiles();
-app.UseStaticFiles();
-

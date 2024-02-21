@@ -5,7 +5,7 @@
 namespace HomeBankingNet8V3.Migrations
 {
     /// <inheritdoc />
-    public partial class addLoanEntiity : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
