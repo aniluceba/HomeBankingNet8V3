@@ -13,9 +13,6 @@ builder.Services.AddControllers();
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-//builder.Services.AddControllers().AddJsonOptions(x=>
-//x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
-
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
@@ -28,7 +25,7 @@ builder.Services.AddRazorPages();
 //Add DbContext to the container
 
 builder.Services.AddDbContext<HomeBankingContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("HomeBankingConexion")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("HbAppDbConnection")));
 
 
 // Autenticacion
@@ -56,8 +53,6 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
-
-        // En este paso buscamos un service que este con la clase HomeBankingContext
         var context = services.GetRequiredService<HomeBankingContext>();
         DbInitializer.Initialize(context);
     }
@@ -75,6 +70,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
 }
 app.UseDefaultFiles();
+
 app.UseStaticFiles();
 
 app.UseRouting();
