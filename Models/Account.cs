@@ -16,7 +16,7 @@
 
             public long AccountId { get; set; }
 
-        public ICollection<Transaction> Transactions { get; set; }
+        public ICollection<Transaction> Transaction { get; set; }
 
     }
 

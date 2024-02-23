@@ -9,62 +9,82 @@ namespace HomeBankingNet8V3.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly IAccountRepository _accountRepository;
-
-        // Constructor que recibe el repositorio de cuentas
+        private IAccountRepository _accountRepository;
         public AccountsController(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
 
-        // Método para obtener todas las cuentas
+
+
+
         [HttpGet]
-        public ActionResult<AccountDTO> GetAllAccounts()
+        public IActionResult Get()
         {
-            var accounts = _accountRepository.GetAllAccounts();
-            var accountDTOs = new List<AccountDTO>();
-
-            foreach (var account in accounts)
+            try
             {
-                var accountDTO = new AccountDTO
+                var accounts = _accountRepository.GetAllAccounts();
+
+                var accountsDto = new List<AccountDTO>();
+                foreach (Account account in accounts)
                 {
-                    Id = account.Id,
-                    Number = account.Number,
-                    Balance = account.Balance,
-                    CreationDate = account.CreationDate
-                };
-                accountDTOs.Add(accountDTO);
+                    var newAccountDto = new AccountDTO
+                    {
+                        Number = account.Number,
+                        CreationDate = account.CreationDate,
+                        Balance = account.Balance,
+                        Transactions = account.Transaction.Select(tr => new TransactionDTO
+                        {
+                            Id = tr.Id,
+                            Type = tr.Type.ToString(),
+                            Amount = tr.Amount,
+                            Description = tr.Description,
+                            Date = tr.Date
+                        }).ToList()
+                    };
+                    accountsDto.Add(newAccountDto);
+                }
+                return Ok(accountsDto);
             }
-
-            var accountListDTO = new AccountDTO
+            catch (Exception ex)
             {
-               Accounts = accountDTOs
-            };
-
-            return Ok(accountListDTO);
+                return StatusCode(500, ex.Message);
+            }
         }
 
-        // Método para obtener una cuenta por su ID
         [HttpGet("{id}")]
-        public ActionResult<AccountDTO> GetAccountById(int id)
+        public IActionResult Get(long id)
         {
-            var account = _accountRepository.GetAccountById(id);
-
-            if (account == null)
+            try
             {
-                return NotFound();
+                var account = _accountRepository.FindById(id);
+                if (account == null)
+                {
+                    return Forbid();
+                }
+
+                var AccountDto = new AccountDTO
+                {
+                    Number = account.Number,
+                    CreationDate = account.CreationDate,
+                    Balance = account.Balance,
+                    Transactions = account.Transaction.Select(tr => new TransactionDTO
+                    {
+                        Id = tr.Id,
+                        Type = tr.Type.ToString(),
+                        Amount = tr.Amount,
+                        Description = tr.Description,
+                        Date = tr.Date
+                    }).ToList()
+
+                };
+
+                return Ok(AccountDto);
             }
-
-            var accountDTO = new AccountDTO
+            catch (Exception ex)
             {
-                Id = account.Id,
-                Number = account.Number,
-                Balance = account.Balance,
-                CreationDate = account.CreationDate
-            };
-
-            return Ok(accountDTO);
+                return StatusCode(500, ex.Message);
+            }
         }
     }
 }
-

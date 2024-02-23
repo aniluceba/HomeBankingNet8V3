@@ -1,38 +1,25 @@
 ﻿using HomeBankingNet8V3.Models;
+using HomeBankingNet8V3.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeBankingNet8V3.Repositories
 {
-    public class AccountRepository:RepositoryBase<Account>
+    public class AccountRepository : RepositoryBase<Account>, IAccountRepository
     {
         public AccountRepository(HomeBankingContext repositoryContext) : base(repositoryContext)
         {
+
         }
-        public class MyAccountRepository : IAccountRepository
+        public Account FindById(long id)
         {
-            // Supongamos que tenemos una lista de cuentas
-            private List<Account> accounts;
-
-            // Constructor de la clase
-            public MyAccountRepository()
-            {
-                // Inicializamos la lista de cuentas
-                accounts = new List<Account>();
-            }
-
-            // Implementación del método para obtener todas las cuentas
-            public IEnumerable<Account> GetAllAccounts()
-            {
-                return accounts;
-            }
-
-            // Implementación del método para obtener una cuenta por su ID
-            public Account GetAccountById(int accountId)
-            {
-                // Supongamos que buscamos la cuenta en la lista por su ID
-                return accounts.Find(account => account.Id == accountId);
-            }
+            return FindByCondition(Account => Account.Id == id)
+                 .Include(Account => Account.Transaction).FirstOrDefault();
         }
 
-
+        public IEnumerable<Account> GetAllAccounts()
+        {
+            return FindAll()
+               .Include(Account => Account.Transaction).ToList();
+        }
     }
 }

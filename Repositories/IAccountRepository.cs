@@ -4,7 +4,7 @@ namespace HomeBankingNet8V3.Repositories
 {
     public interface IAccountRepository
     {
-        IEnumerable <Account> GetAllAccounts();
-        Account GetAccountById(int accountId);
+        IEnumerable<Account> GetAllAccounts();
+        Account FindById(long id);
     }
 }

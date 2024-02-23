@@ -31,7 +31,7 @@ namespace HomeBankingNet8V3.Models
 
                 }
             }
-            if (!context.Transaction.Any())
+            if (!context.Transactions.Any())
 
             {
 
@@ -57,7 +57,7 @@ namespace HomeBankingNet8V3.Models
 
                     {
 
-                        context.Transaction.Add(transaction);
+                        context.Transactions.Add(transaction);
 
                     }
 
@@ -144,8 +144,8 @@ namespace HomeBankingNet8V3.Models
                         new Card {
                             ClientId= context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").Id,
                             CardHolder = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").FirstName + " " + context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").LastName,
-                            Type = CardType.DEBIT.ToString(),
-                            Color = CardColor.GOLD.ToString(),
+                            Type = CardType.DEBIT,
+                            Color = CardColor.GOLD,
                             Number = "3325-6745-7876-4445",
                             Cvv = 990,
                             FromDate= DateTime.Now,
@@ -154,8 +154,8 @@ namespace HomeBankingNet8V3.Models
                         new Card {
                             ClientId= context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").Id,
                             CardHolder = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").FirstName + " " + context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com").LastName,
-                            Type = CardType.CREDIT.ToString(),
-                            Color = CardColor.TITANIUM.ToString(),
+                            Type = CardType.CREDIT,
+                            Color = CardColor.TITANIUM,
                             Number = "2234-6745-552-7888",
                             Cvv = 750,
                             FromDate= DateTime.Now,

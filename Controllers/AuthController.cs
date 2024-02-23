@@ -1,15 +1,10 @@
-﻿using HomeBankingNet8V3.Repositories;
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using HomeBankingNet8V3.Models;
+using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Numerics;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using System;
-using HomeBankingNet8V3.Models;
-using HomeBankingNet8V3.dtos;
 
 namespace HomeBankingNet8V3.Controllers
 {
@@ -23,13 +18,16 @@ namespace HomeBankingNet8V3.Controllers
             _clientRepository = clientRepository;
         }
 
+
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Client client)
         {
             try
             {
                 Client user = _clientRepository.FindByEmail(client.Email);
+
                 if (user == null || !String.Equals(user.Password, client.Password))
+
                     return Unauthorized();
 
                 var claims = new List<Claim>
@@ -60,15 +58,18 @@ namespace HomeBankingNet8V3.Controllers
         {
             try
             {
+
                 await HttpContext.SignOutAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme);
                 return Ok();
+
             }
             catch (Exception ex)
             {
                 return StatusCode(500, ex.Message);
             }
         }
+
     }
 }
 

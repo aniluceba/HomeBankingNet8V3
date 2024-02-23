@@ -12,8 +12,6 @@
 
         public DateTime Date { get; set; }
 
-        public long ClientId { get; set; }
-
         public long AccountId { get; set; }
 
 
