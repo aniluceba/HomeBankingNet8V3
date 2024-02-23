@@ -1,5 +1,7 @@
+using HomeBankingNet8v3.Repositories;
 using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
+using HomeBankingNet8V3.Controllers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -17,6 +19,8 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<ICardRepository, CardRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<IClientLoanRepository, ClientLoanRepository>();
+builder.Services.AddScoped<ILoanRepository, LoanRepository>();
 
 
 // Add services to the container.
