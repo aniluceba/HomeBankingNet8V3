@@ -22,7 +22,7 @@
                     {
                         new Account {ClientId = accountVictor.Id, CreationDate = DateTime.Now, Number = string.Empty, Balance = 0 }
                     };
-        
+
                     context.AddRange(accounts);
                     context.SaveChanges();
 
@@ -68,7 +68,7 @@
 
             if (!context.Loans.Any())
             {
-                //crearemos 3 prestamos Hipotecario, Personal y Automotriz
+
                 var loans = new Loan[]
                 {
                     new Loan { Name = "Hipotecario", MaxAmount = 500000, Payments = "12,24,36,48,60" },
@@ -76,25 +76,25 @@
                     new Loan { Name = "Automotriz", MaxAmount = 300000, Payments = "6,12,24,36" },
                 };
 
-                foreach(Loan loan in loans)
+                foreach (Loan loan in loans)
                 {
                     context.Loans.Add(loan);
                 }
 
                 context.SaveChanges();
 
-                //ahora agregaremos los clientloan (Prestamos del cliente)
-                //usaremos al único cliente que tenemos y le agregaremos un préstamo de cada item
                 var client1 = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com");
                 if (client1 != null)
                 {
-                    //ahora usaremos los 3 tipos de prestamos
                     var loan1 = context.Loans.FirstOrDefault(l => l.Name == "Hipotecario");
                     if (loan1 != null)
                     {
                         var clientLoan1 = new ClientLoan
                         {
-                            Amount=400000, ClientId = client1.Id, LoanId= loan1.Id, Payments="60"
+                            Amount = 400000,
+                            ClientId = client1.Id,
+                            LoanId = loan1.Id,
+                            Payments = "60"
                         };
                         context.ClientLoans.Add(clientLoan1);
                     }
@@ -125,17 +125,55 @@
                         context.ClientLoans.Add(clientLoan3);
                     }
 
-                    //guardamos todos los prestamos
                     context.SaveChanges();
 
                 }
 
             }
 
+            if (!context.Cards.Any())
+            {
+                var client1 = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com");
+                if (client1 != null)
+                {
+                    //le agregamos 2 tarjetas de credito una gold y una titanium de tipo debito y credito respectivamente
+                    var cards = new Card[]
+                    {
+                        new Card
+                        {
+                            ClientId = client1.Id,
+                            CardHolder = client1.FirstName + " " + client1.LastName,
+                            Type = CardType.DEBIT,
+                            Color = CardColor.GOLD,
+                            Number = "3325-6745-7876-4445",
+                            Cvv = 990,
+                            FromDate = DateTime.Now,
+                            ThruDate = DateTime.Now.AddYears(4)
+                        },
+                        new Card
+                        {
+                            ClientId= client1.Id,
+                            CardHolder = client1.FirstName + " " + client1.LastName,
+                            Type = CardType.CREDIT,
+                            Color = CardColor.TITANIUM,
+                            Number = "2234-6745-552-7888",
+                            Cvv = 750,
+                            FromDate = DateTime.Now,
+                            ThruDate= DateTime.Now.AddYears(5)
+                        }
+                    };
+                    foreach (Card card in cards)
+                    {
+                        context.Cards.Add(card);
+                    }
+                    context.SaveChanges();
+
+                }
+
+
+            }
+
         }
-
-
-
     }
 }
 

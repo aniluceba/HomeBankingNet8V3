@@ -17,6 +17,12 @@ namespace HomeBankingNet8V3.Repositories
                     .Include(account => account.Transactions)
                     .FirstOrDefault();
         }
+
+        public Account FindByNumber(string fromAccountNumber)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<Account> GetAllAccounts()
         {
             return FindAll()

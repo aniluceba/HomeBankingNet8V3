@@ -11,6 +11,12 @@ namespace HomeBankingNet8V3.Repositories
         {
 
         }
+
+        public Client FindByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
         public Client FindById(long id)
         {
             return FindByCondition(client => client.Id == id)

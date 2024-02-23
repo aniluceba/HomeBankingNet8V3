@@ -2,9 +2,6 @@
 using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace HomeBankingNet8V3.Controllers
 {
@@ -12,42 +9,42 @@ namespace HomeBankingNet8V3.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private IAccountRepository _accountsRepository;
-        public AccountsController(IAccountRepository accountsRepository)
+        private IAccountRepository _accountRepository;
+        public AccountsController(IAccountRepository accountRepository)
         {
-            _accountsRepository = accountsRepository;
+            _accountRepository = accountRepository;
         }
 
-        [HttpGet]
 
+
+
+        [HttpGet]
         public IActionResult Get()
         {
             try
             {
-                var accounts = _accountsRepository.GetAllAccounts();
-                var accountsDTO = new List<AccountDTO>();
+                var accounts = _accountRepository.GetAllAccounts();
 
+                var accountsDto = new List<AccountDTO>();
                 foreach (Account account in accounts)
                 {
-                    var newAccountsDTO = new AccountDTO
+                    var newAccountDto = new AccountDTO
                     {
-                        Id = account.Id,
                         Number = account.Number,
                         CreationDate = account.CreationDate,
                         Balance = account.Balance,
                         Transaction = account.Transactions.Select(tr => new TransactionDTO
                         {
                             Id = tr.Id,
-                            Type = tr.Type,
+                            Type = tr.Type.ToString(),
                             Amount = tr.Amount,
                             Description = tr.Description,
-                            Date = tr.Date,
+                            Date = tr.Date
                         }).ToList()
-
                     };
-                    accountsDTO.Add(newAccountsDTO);
+                    accountsDto.Add(newAccountDto);
                 }
-                return Ok(accountsDTO);
+                return Ok(accountsDto);
             }
             catch (Exception ex)
             {
@@ -55,33 +52,34 @@ namespace HomeBankingNet8V3.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
             try
             {
-                var account = _accountsRepository.FindById(id);
+                var account = _accountRepository.FindById(id);
                 if (account == null)
                 {
                     return Forbid();
                 }
-                var accountDTO = new AccountDTO
+
+                var AccountDto = new AccountDTO
                 {
-                    Id = account.Id,
                     Number = account.Number,
                     CreationDate = account.CreationDate,
                     Balance = account.Balance,
                     Transaction = account.Transactions.Select(tr => new TransactionDTO
                     {
                         Id = tr.Id,
-                        Type = tr.Type,
+                        Type = tr.Type.ToString(),
                         Amount = tr.Amount,
                         Description = tr.Description,
-                        Date = tr.Date,
+                        Date = tr.Date
                     }).ToList()
+
                 };
-                return Ok(accountDTO);
+
+                return Ok(AccountDto);
             }
             catch (Exception ex)
             {

@@ -19,5 +19,7 @@ namespace HomeBankingNet8V3.Models
         public string Email { get; set; }
 
         public ICollection<AccountDTO> Accounts { get; set; }
+        public ICollection<ClientLoanDTO> Credits { get; set; }
+        public ICollection<CardDto> Cards { get; set; }
     }
 }
