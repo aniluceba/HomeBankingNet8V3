@@ -18,12 +18,6 @@ namespace HomeBankingNet8V3.Models
 
         public ICollection<Transaction> Transactions { get; set; }
 
-        public void SetBalance(double TransactionAmount)
-        {
-            Balance += TransactionAmount;
-
-
-        }
 
     }
 }

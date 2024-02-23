@@ -18,5 +18,6 @@ namespace HomeBankingNet8V3.Models
         public DbSet<ClientLoan> ClientLoans { get; set; }
 
         public DbSet<Card> Cards { get; set; }
+
     }
 }

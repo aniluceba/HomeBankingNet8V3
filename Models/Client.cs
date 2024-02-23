@@ -4,6 +4,8 @@ namespace HomeBankingNet8V3.Models
 {
     public class Client
     {
+        internal readonly object Loan;
+
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -13,6 +15,5 @@ namespace HomeBankingNet8V3.Models
         public ICollection<ClientLoan> ClientLoans { get; set; }
 
         public ICollection<Card> Cards { get; set; }
-        public object Loans { get; internal set; }
     }
 }

@@ -136,7 +136,6 @@
                 var client1 = context.Clients.FirstOrDefault(c => c.Email == "vcoronado@gmail.com");
                 if (client1 != null)
                 {
-                    //le agregamos 2 tarjetas de credito una gold y una titanium de tipo debito y credito respectivamente
                     var cards = new Card[]
                     {
                         new Card
