@@ -61,31 +61,31 @@ namespace HomeBankingNet8V3.Controllers
                 Client client = _clientRepository.FindByEmail(email);
                 if (client == null)
                 {
-                    return StatusCode(403, "No existe el cliente");
+                    return StatusCode(403, "La cuenta del cliente no existe");
                 }
 
                 if (applicationDto.Amount <= 0)
                 {
-                    return StatusCode(403, "El monto del prestamo no puede ser de CERO pesos");
+                    return StatusCode(403, "El monto no puede ser de cero pesos");
                 }
                 Loan loan = _loanRepository.FindById(applicationDto.LoanId);
                 if (loan == null)
                 {
-                    return StatusCode(403, "El tipo de prestamos solicitado no existe");
+                    return StatusCode(403, "El prestamo que usted quiere solicitar no existe");
                 }
                 if (applicationDto.Amount > loan.MaxAmount)
                 {
-                    return StatusCode(403, "El monto del prestamo solicitado excede el permitido");
+                    return StatusCode(403, "El prestamo solicitado excede el monto permitido");
                 }
 
                 if (applicationDto.Payments.IsNullOrEmpty())
                 {
-                    return StatusCode(403, "El campo cuotas no puede venir vacio");
+                    return StatusCode(403, "Cuotas no puede quedar vacio");
                 }
                 var newPaymentValues = loan.Payments.Split(',').Select(s => s.Trim()).ToList();
                 if (!newPaymentValues.Contains(applicationDto.Payments.ToString()))
                 {
-                    return BadRequest("La cantidad de cuotas ingresadas no es valida para el tipo de prestamo solicitado");
+                    return BadRequest("La cantidad de cuentas ingresadas no es valida");
                 }
 
 
@@ -93,11 +93,11 @@ namespace HomeBankingNet8V3.Controllers
                 Account toAccount = _accountRepository.FindByNumber(applicationDto.ToAccountNumber);
                 if (toAccount == null)
                 {
-                    return StatusCode(403, "La cuenta de destino no existe");
+                    return StatusCode(403, "La cuenta que quiere acceder no existe");
                 }
                 if (toAccount.ClientId != client.Id)
                 {
-                    return StatusCode(403, "La cuenta de destino no pertenece al cliente");
+                    return StatusCode(403, "La cuenta solicitada no pertenece al cliente");
                 }
                 double finalAmount = applicationDto.Amount * 1.2;
 
