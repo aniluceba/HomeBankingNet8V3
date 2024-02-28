@@ -15,8 +15,8 @@
                 .then(function (response) {
                     //get client ifo
                     app.clientInfo = response.data;
-                    app.creditCards = app.clientInfo.cards.$values.filter(card => card.type == "CREDIT");
-                    app.debitCards = app.clientInfo.cards.$values.filter(card => card.type == "DEBIT");
+                    app.creditCards = app.clientInfo.cards.filter(card => card.type == "CREDIT");
+                    app.debitCards = app.clientInfo.cards.filter(card => card.type == "DEBIT");
                 })
                 .catch(function (error) {
                     // handle error
@@ -27,13 +27,13 @@
         formatDate: function (date) {
             return new Date(date).toLocaleDateString('en-gb');
         },
-        signOut: function(){
+        signOut: function () {
             axios.post('/api/auth/logout')
-            .then(response => window.location.href="/index.html")
-            .catch(() =>{
-                this.errorMsg = "Sign out failed"   
-                this.errorToats.show();
-            })
+                .then(response => window.location.href = "/index.html")
+                .catch(() => {
+                    this.errorMsg = "Sign out failed"
+                    this.errorToats.show();
+                })
         },
     },
     mounted: function () {

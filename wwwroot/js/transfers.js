@@ -1,6 +1,6 @@
 var app = new Vue({
-    el:"#app",
-    data:{
+    el: "#app",
+    data: {
         clientAccounts: [],
         clientAccountsTo: [],
         debitCards: [],
@@ -12,48 +12,42 @@ var app = new Vue({
         amount: 0,
         description: ""
     },
-    methods:{
-        getData: function(){
+    methods: {
+        getData: function () {
             axios.get("/api/clients/current/accounts")
-            .then((response) => {
-                //get client ifo
-                this.clientAccounts = response.data.$values;
-            })
-            .catch((error) => {
-                this.errorMsg = "Error getting data";
-                this.errorToats.show();
-            })
+                .then((response) => {
+                    //get client ifo
+                    this.clientAccounts = response.data;
+                })
+                .catch((error) => {
+                    this.errorMsg = "Error getting data";
+                    this.errorToats.show();
+                })
         },
-        formatDate: function(date){
+        formatDate: function (date) {
             return new Date(date).toLocaleDateString('en-gb');
         },
-        checkTransfer: function(){
-            if(this.accountFromNumber == "VIN"){
-                this.errorMsg = "You must select an origin account";  
+        checkTransfer: function () {
+            if (this.accountFromNumber == "VIN") {
+                this.errorMsg = "You must select an origin account";
                 this.errorToats.show();
             }
-            else if(this.accountToNumber == "VIN"){
-                this.errorMsg = "You must select a destination account";  
+            else if (this.accountToNumber == "VIN") {
+                this.errorMsg = "You must select a destination account";
                 this.errorToats.show();
-            }else if(this.amount == 0){
-                this.errorMsg = "You must indicate an amount";  
+            } else if (this.amount == 0) {
+                this.errorMsg = "You must indicate an amount";
                 this.errorToats.show();
             }
-            else if(this.description.length <= 0){
-                this.errorMsg = "You must indicate a description";  
+            else if (this.description.length <= 0) {
+                this.errorMsg = "You must indicate a description";
                 this.errorToats.show();
-            }else{
+            } else {
                 this.modal.show();
             }
         },
-        transfer: function(){
-/*             let config = {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            }
-            axios.post(`/api/transactions?
-            fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`,config) */
+        transfer: function () {
+            
             axios.post('/api/transactions',
                 {
                     fromAccountNumber: this.accountFromNumber,
@@ -62,38 +56,38 @@ var app = new Vue({
                     description: this.description
                 }
             )
-            .then(response => { 
-                this.modal.hide();
-                this.okmodal.show();
-            })
-            .catch((error) =>{
-                this.errorMsg = error.response.data;  
-                this.errorToats.show();
-            })
+                .then(response => {
+                    this.modal.hide();
+                    this.okmodal.show();
+                })
+                .catch((error) => {
+                    this.errorMsg = error.response.data;
+                    this.errorToats.show();
+                })
         },
-        changedType: function(){
+        changedType: function () {
             this.accountFromNumber = "VIN";
             this.accountToNumber = "VIN";
         },
-        changedFrom: function(){
-            if(this.trasnferType == "own"){
+        changedFrom: function () {
+            if (this.trasnferType == "own") {
                 this.clientAccountsTo = this.clientAccounts.filter(account => account.number != this.accountFromNumber);
                 this.accountToNumber = "VIN";
             }
         },
-        finish: function(){
+        finish: function () {
             window.location.reload();
         },
-        signOut: function(){
+        signOut: function () {
             axios.post('/api/auth/logout')
-            .then(response => window.location.href="/index.html")
-            .catch(() =>{
-                this.errorMsg = "Sign out failed"   
-                this.errorToats.show();
-            })
+                .then(response => window.location.href = "/index.html")
+                .catch(() => {
+                    this.errorMsg = "Sign out failed"
+                    this.errorToats.show();
+                })
         },
     },
-    mounted: function(){
+    mounted: function () {
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.modal = new bootstrap.Modal(document.getElementById('confirModal'));
         this.okmodal = new bootstrap.Modal(document.getElementById('okModal'));

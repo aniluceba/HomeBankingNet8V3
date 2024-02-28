@@ -10,49 +10,23 @@
         showSignUp: false,
     },
     methods: {
-        //signIn: function (event) {
-        //    event.preventDefault();
-        //    let config = {
-        //        headers: {
-        //            'content-type': 'application/x-www-form-urlencoded'
-        //        }
-        //    }
-        //    axios.post('/api/auth/login', `email=${this.email}&password=${this.password}`, config)
-        //        .then(response => window.location.href = "/accounts.html")
-        //        .catch(() => {
-        //            this.errorMsg = "Sign in failed, check the information"
-        //            this.errorToats.show();
-        //        })
-        //},
+ 
         signIn: function (event) {
             event.preventDefault();
             axios.post('/api/auth/login', {
                 email: this.email,
                 password: this.password
-                })
+            })
                 .then(response => window.location.href = "/accounts.html")
                 .catch(() => {
                     this.errorMsg = "Sign in failed, check the information"
                     this.errorToats.show();
                 })
         },
-/*         signUp: function (event) {
-            event.preventDefault();
-            let config = {
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded'
-                }
-            }
-            axios.post('/api/clients', `firstName=${this.firstName}&lastName=${this.lastName}&email=${this.email}&password=${this.password}`, config)
-                .then(() => { this.signIn(event) })
-                .catch(() => {
-                    this.errorMsg = "Sign up failed, check the information"
-                    this.errorToats.show();
-                })
-        }, */
+        
         signUp: function (event) {
             event.preventDefault();
-            axios.post('/api/clients',{
+            axios.post('/api/clients', {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 password: this.password,
@@ -75,4 +49,3 @@
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
     }
 })
-

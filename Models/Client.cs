@@ -16,7 +16,6 @@ namespace HomeBankingNet8V3.Models
         public ICollection<Account> Accounts { get; set; }
         public ICollection<ClientLoan> ClientLoans { get; set; }
         public ICollection<Card> Cards { get; set; }
-
         public ICollection<Loan> Loans { get; set; }
 
     }
