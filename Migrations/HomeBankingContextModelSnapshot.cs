@@ -30,9 +30,6 @@ namespace HomeBankingNet8V3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AccountId")
-                        .HasColumnType("bigint");
-
                     b.Property<double>("Balance")
                         .HasColumnType("float");
 
@@ -66,8 +63,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<long>("ClientId")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Color")
+                        .HasColumnType("int");
 
                     b.Property<int>("Cvv")
                         .HasColumnType("int");
@@ -81,8 +78,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<DateTime>("ThruDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -153,19 +150,21 @@ namespace HomeBankingNet8V3.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long?>("ClientId")
+                        .HasColumnType("bigint");
+
                     b.Property<double>("MaxAmount")
                         .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Number")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Payments")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
 
                     b.ToTable("Loans");
                 });
@@ -190,8 +189,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -213,11 +212,13 @@ namespace HomeBankingNet8V3.Migrations
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Card", b =>
                 {
-                    b.HasOne("HomeBankingNet8V3.Models.Client", null)
+                    b.HasOne("HomeBankingNet8V3.Models.Client", "Client")
                         .WithMany("Cards")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.ClientLoan", b =>
@@ -237,6 +238,13 @@ namespace HomeBankingNet8V3.Migrations
                     b.Navigation("Client");
 
                     b.Navigation("Loan");
+                });
+
+            modelBuilder.Entity("HomeBankingNet8V3.Models.Loan", b =>
+                {
+                    b.HasOne("HomeBankingNet8V3.Models.Client", null)
+                        .WithMany("Loans")
+                        .HasForeignKey("ClientId");
                 });
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Transaction", b =>
@@ -260,6 +268,8 @@ namespace HomeBankingNet8V3.Migrations
                     b.Navigation("Cards");
 
                     b.Navigation("ClientLoans");
+
+                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("HomeBankingNet8V3.Models.Loan", b =>

@@ -4,7 +4,7 @@
     {
         public long Id { get; set; }
 
-        public string Type { get; set; }
+        public TransactionType Type { get; set; }
 
         public double Amount { get; set; }
 
@@ -12,8 +12,9 @@
 
         public DateTime Date { get; set; }
 
-
         public long AccountId { get; set; }
+
+        public Transaction () { }
 
 
     }

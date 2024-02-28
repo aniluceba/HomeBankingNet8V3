@@ -21,14 +21,5 @@ namespace HomeBankingNet8V3.Repositories
             SaveChanges();
         }
 
-        public void Save(System.Transactions.Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
-
-        System.Transactions.Transaction ITransactionRepository.FindByNumber(long Id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
