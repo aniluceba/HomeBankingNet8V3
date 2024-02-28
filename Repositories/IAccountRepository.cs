@@ -1,13 +1,16 @@
 ﻿using HomeBankingNet8V3.Models;
-using System.Collections.Generic;
 
 namespace HomeBankingNet8V3.Repositories
 {
     public interface IAccountRepository
     {
-        IEnumerable <Account> GetAllAccounts();
-        void Save(Account account);
+        IEnumerable<Account> GetAllAccounts();
         Account FindById(long id);
-        Account FindByNumber(string fromAccountNumber);
+        void Save(Account account);
+        IEnumerable<Account> GetAccountsByClient(string Email);
+        Account FindByNumber(string number);
+
+        bool HasAccountsAvailable(string Email);
+
     }
 }

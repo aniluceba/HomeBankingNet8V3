@@ -1,4 +1,5 @@
-﻿using HomeBankingNet8V3.Models;
+﻿using HomeBankingNet8V3.Services.Interfaces;
+using HomeBankingNet8V3.Models;
 using HomeBankingNet8V3.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -13,22 +14,27 @@ namespace HomeBankingNet8V3.Controllers
     public class AuthController : ControllerBase
     {
         private IClientRepository _clientRepository;
-        public AuthController(IClientRepository clientRepository)
+        private IPasswordHasher _passwordHasher;
+        public AuthController(IClientRepository clientRepository, IPasswordHasher passwordHasher)
         {
             _clientRepository = clientRepository;
+            _passwordHasher = passwordHasher;
         }
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] Client client)
+        public async Task<IActionResult> Login([FromBody] NewClientDTO NewClientDto)
         {
             try
             {
-                Client user = _clientRepository.FindByEmail(client.Email);
+                Client user = _clientRepository.FindByEmail(NewClientDto.Email);
 
-                if (user == null || !String.Equals(user.Password, client.Password))
+                var result = _passwordHasher.VerifyPassword(user.HashedPassword, NewClientDto.Password);
+                if (result == false)
+                {
+                    throw new Exception("Username is not correct");
+                }
 
-                    return Unauthorized();
 
                 var claims = new List<Claim>
                 {

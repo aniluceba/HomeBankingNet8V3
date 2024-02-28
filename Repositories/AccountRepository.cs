@@ -1,8 +1,6 @@
 ﻿using HomeBankingNet8V3.Models;
-using Microsoft.EntityFrameworkCore;
 using HomeBankingNet8V3.Repositories;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace HomeBankingNet8V3.Repositories
 {
@@ -10,29 +8,51 @@ namespace HomeBankingNet8V3.Repositories
     {
         public AccountRepository(HomeBankingContext repositoryContext) : base(repositoryContext)
         {
+
         }
         public Account FindById(long id)
         {
-            return FindByCondition(account => account.Id == id)
-                    .Include(account => account.Transactions)
-                    .FirstOrDefault();
+            return FindByCondition(Account => Account.Id == id)
+                 .Include(Account => Account.Transactions).FirstOrDefault();
         }
 
-        public Account FindByNumber(string fromAccountNumber)
+        public Account FindByNumber(string number)
         {
-            throw new NotImplementedException();
+            return FindByCondition(account => account.Number.ToUpper() == number.ToUpper())
+                .Include(account => account.Transactions)
+                .FirstOrDefault();
+        }
+
+        public IEnumerable<Account> GetAccountsByClient(string Email)
+        {
+            return FindByCondition(x => x.Client.Email == Email)
+                .Include(account => account.Transactions)
+                .ToList();
         }
 
         public IEnumerable<Account> GetAllAccounts()
         {
             return FindAll()
-                    .Include(account => account.Transactions)
-                    .ToList();
+               .Include(Account => Account.Transactions).ToList();
         }
+
+        public bool HasAccountsAvailable(string Email)
+        {
+            return FindByCondition(account => account.Client.Email == Email).Count() < 3;
+        }
+
         public void Save(Account account)
         {
-            Create(account);
+            if (account.Id == 0)
+            {
+                Create(account);
+            }
+            else
+            {
+                Update(account);
+            }
             SaveChanges();
         }
+
     }
 }

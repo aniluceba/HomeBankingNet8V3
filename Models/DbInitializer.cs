@@ -8,7 +8,7 @@
             {
                 var clients = new Client[]
                 {
-                    new Client() {FirstName="Victor",LastName="Coronado",Email="vcoronado@gmail.com",Password="123456"}
+                    new Client() {FirstName="Victor",LastName="Coronado",Email="vcoronado@gmail.com",HashedPassword="123456"}
                 };
                 context.AddRange(clients);
                 context.SaveChanges();
