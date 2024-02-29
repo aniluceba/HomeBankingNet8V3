@@ -1,4 +1,6 @@
-﻿namespace HomeBankingNet8V3.Models
+﻿using HomeBankingNet8V3.Services;
+
+namespace HomeBankingNet8V3.Models.Services
 {
     public class DbInitializer
     {
@@ -6,9 +8,10 @@
         {
             if (!context.Clients.Any())
             {
+                PasswordHasher hasher = new PasswordHasher();
                 var clients = new Client[]
                 {
-                    new Client() {FirstName="Victor",LastName="Coronado",Email="vcoronado@gmail.com",HashedPassword="123456"}
+                    new Client() {FirstName="Victor",LastName="Coronado",Email="vcoronado@gmail.com",HashedPassword= hasher.Hash("123456")}
                 };
                 context.AddRange(clients);
                 context.SaveChanges();

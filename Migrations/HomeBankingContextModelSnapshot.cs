@@ -102,10 +102,10 @@ namespace HomeBankingNet8V3.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("HashedPassword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Password")
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

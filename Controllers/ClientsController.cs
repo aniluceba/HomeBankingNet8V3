@@ -279,7 +279,6 @@ namespace HomeBankingNet8V3.Controllers
                     CreationDate = DateTime.Now,
                     Balance = 0,
                     ClientId = client.Id
-                    //Client = client
 
                 };
                 _accountRepository.Save(newAccount);

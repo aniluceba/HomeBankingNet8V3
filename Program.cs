@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using HomeBankingNet8V3.Services.Interfaces;
 using HomeBankingNet8V3.Services;
+using HomeBankingNet8V3.Models.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
